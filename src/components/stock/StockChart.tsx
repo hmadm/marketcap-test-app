@@ -1,8 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AreaChart, Area, ResponsiveContainer, Tooltip, TooltipProps } from "recharts";
+import { AreaChart, Area, ResponsiveContainer, Tooltip } from "recharts";
 import type { HistoryRange, HistoryPoint } from "@/lib/yahoo";
+
+type TooltipContentProps = {
+  active?: boolean;
+  payload?: { payload: HistoryPoint }[];
+};
 
 const ranges: HistoryRange[] = ["1D", "1W", "1M", "3M", "6M", "1Y"];
 
@@ -38,9 +43,9 @@ function ChartTooltip({
   active,
   payload,
   range,
-}: TooltipProps<number, string> & { range: HistoryRange }) {
+}: TooltipContentProps & { range: HistoryRange }) {
   if (!active || !payload?.length) return null;
-  const point = payload[0].payload as HistoryPoint;
+  const point = payload[0].payload;
   return (
     <div className="rounded-md border border-border bg-surface-2 px-3 py-2 text-xs shadow-xl">
       <div className="text-sm font-medium">${point.v.toFixed(2)}</div>

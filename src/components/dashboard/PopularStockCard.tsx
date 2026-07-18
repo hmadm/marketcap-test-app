@@ -2,9 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { AreaChart, Area, ResponsiveContainer, Tooltip, TooltipProps } from "recharts";
+import { AreaChart, Area, ResponsiveContainer, Tooltip } from "recharts";
 import type { PopularStock } from "@/lib/mock-data";
 import type { HistoryPoint } from "@/lib/yahoo";
+
+type TooltipContentProps = {
+  active?: boolean;
+  payload?: { payload: HistoryPoint }[];
+};
 
 const POLL_MS = 15_000;
 // Mini cards show the past month so the line reflects a real trend instead
@@ -15,9 +20,9 @@ function formatTime(t: number) {
   return new Date(t).toLocaleDateString([], { month: "short", day: "numeric" });
 }
 
-function ChartTooltip({ active, payload }: TooltipProps<number, string>) {
+function ChartTooltip({ active, payload }: TooltipContentProps) {
   if (!active || !payload?.length) return null;
-  const point = payload[0].payload as HistoryPoint;
+  const point = payload[0].payload;
   return (
     <div className="rounded-md border border-border bg-surface-2 px-2 py-1 text-xs shadow-xl">
       <div className="font-medium">${point.v.toFixed(2)}</div>

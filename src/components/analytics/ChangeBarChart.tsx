@@ -29,7 +29,7 @@ export function ChangeBarChart({ data }: { data: Row[] }) {
               borderRadius: 8,
               fontSize: 12,
             }}
-            formatter={(value: number) => [`${value.toFixed(2)}%`, "Change"]}
+            formatter={(value) => [`${Number(value).toFixed(2)}%`, "Change"]}
           />
           <Bar dataKey="changePct" radius={[4, 4, 4, 4]} isAnimationActive={false}>
             {data.map((row) => (

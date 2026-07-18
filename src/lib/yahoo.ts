@@ -18,15 +18,15 @@ type YahooMeta = {
   shortName?: string;
 };
 
+type YahooChartResult = {
+  meta: YahooMeta;
+  timestamp: number[];
+  indicators: { quote: [{ close: (number | null)[] }] };
+};
+
 type YahooChartResponse = {
   chart: {
-    result: [
-      {
-        meta: YahooMeta;
-        timestamp: number[];
-        indicators: { quote: [{ close: (number | null)[] }] };
-      },
-    ] | null;
+    result: [YahooChartResult] | null;
     error: { code: string; description: string } | null;
   };
 };
@@ -35,7 +35,7 @@ async function fetchYahooChart(
   symbol: string,
   range: string,
   interval: string,
-): Promise<YahooChartResponse["chart"]["result"][number]> {
+): Promise<YahooChartResult> {
   const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(
     symbol,
   )}?range=${range}&interval=${interval}`;

@@ -81,7 +81,7 @@ export function PortfolioChart() {
                   fontSize: 12,
                 }}
                 labelFormatter={() => ""}
-                formatter={(value: number) => [`$${value.toFixed(2)}`, "Value"]}
+                formatter={(value) => [`$${Number(value).toFixed(2)}`, "Value"]}
               />
               <Area
                 type="monotone"
