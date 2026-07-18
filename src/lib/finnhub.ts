@@ -13,7 +13,8 @@ async function finnhubFetch<T>(path: string, params: Record<string, string>): Pr
 
   const res = await fetch(url.toString(), { next: { revalidate: 10 } });
   if (!res.ok) {
-    throw new Error(`Finnhub request failed (${res.status}): ${path}`);
+    const body = await res.text().catch(() => "");
+    throw new Error(`Finnhub request failed (${res.status}): ${path} — ${body}`);
   }
   return res.json() as Promise<T>;
 }
